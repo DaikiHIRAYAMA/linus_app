@@ -47,6 +47,7 @@ group :development do
   gem "capistrano", "~> 3.10", require: false
   gem "capistrano-rails", "~> 1.6", require: false
   gem 'capistrano-safe-deploy-to'
+  gem 'capistrano3-unicorn' 
 end
 
 group :test do
