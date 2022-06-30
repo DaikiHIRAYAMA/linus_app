@@ -4,7 +4,7 @@ lock "~> 3.17.0"
 set :application, "linus_app"
 set :repo_url, "https://github.com/DaikiHIRAYAMA/linus_app.git"
 set :bundle_without, %w{test}.join(':')
-set :linked_files, %w{config/secrets.yml}   # 4
+set :linked_files, %w{config/secrets.yml .env}   # 4
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/uploads}   # 5
 set :keep_releases, 5   # 6
 set :rbenv_ruby, '3.0.1'    # 7
