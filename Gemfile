@@ -31,7 +31,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 #unicorn
  gem 'unicorn'
 
-#S3用のgem
+#S3用のgemを追加
 gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails'
 
