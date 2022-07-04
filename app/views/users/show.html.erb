@@ -1,0 +1,10 @@
+<h1><%= current_user %>さんのページ</h1>
+<h2>カード情報</h2>
+<% if @card.present? %>
+<p>カード番号：**** **** **** <%= @card.last4%></p>
+<p>カード名義人: <%= @card.name %></p>
+<p>有効期限：<%= @card.exp_month %> / <%= @card.exp_year %></p>
+<p>ブランド：<%= @card.brand %></p>
+<% else %>
+  <p>カードが登録されていません</p>
+<% end %>

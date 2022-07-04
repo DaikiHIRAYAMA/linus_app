@@ -74,3 +74,6 @@ gem 'rexml'
 
 #日本語にするためのgem
 gem 'devise-i18n'
+
+#クレジットカード決済のためのgem
+gem 'payjp'

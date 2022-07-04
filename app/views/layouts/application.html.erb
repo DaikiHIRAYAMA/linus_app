@@ -4,16 +4,22 @@
     <title>Linus</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script type="text/javascript" src="https://js.pay.jp/v1/"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
+
+
     <%# if user_signed_in? %>
-      <%#= link_to "ブログ一覧", blogs_path %>
+      <%# if current_user.card.blank? %>
+        <%#= link_to "クレジットカード登録", new_card_path %>
+      <%# end %>
+        <%#=  "QRコード読み取り" %>
+        <%#= link_to "マイページ", mypage_path %>
+
       <%#= link_to "ログアウト", destroy_user_session_path, method: :delete %>
     <%# else %>
       <%#= link_to "新規登録", new_user_registration_path %>

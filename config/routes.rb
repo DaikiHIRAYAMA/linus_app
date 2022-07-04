@@ -1,25 +1,34 @@
 Rails.application.routes.draw do
+  get 'users/show'
+  get 'cards/new'
   devise_for :companies
   devise_for :users
   resources :products
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  
-#  devise_for :companies, controllers: {
-#    sessions:      'companies/sessions',
-#    passwords:     'companies/passwords',
-#    registrations: 'companies/registrations'
-#  }
-#  devise_for :users, controllers: {
-#    sessions:      'users/sessions',
-#    passwords:     'users/passwords',
-#    registrations: 'users/registrations'
-#  }
+  resources :cards, only: [:new, :create]
+  resources :users, only: [:show, :index]
+  resources :companies, only: [:index, :show]
+
+  #resources :products, only: :index do
+  resources :orders, only: [:create, :show]
+  #end
+  resources :orders do
+    member do
+      get 'company_index'
+    end
+  end
+
+
+  resources :orders, only: [:index, :show]
+
+  devise_scope :user do
+    get 'mypage', to: 'devise/registrations#show', as: :mypage
+  end
 
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  root 'products#index'
+  root 'orders#index'
 
 end
