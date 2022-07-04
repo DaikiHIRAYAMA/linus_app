@@ -13,8 +13,12 @@ Rails.application.routes.draw do
   #end
   resources :orders do
     member do
-      get 'company_index'
+      get :company_index
     end
+  end
+
+  resources :products do
+     get :scan 
   end
 
 

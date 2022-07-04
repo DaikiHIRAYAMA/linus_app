@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Instascanサンプルデモ</title>
+    <style>
+      body {
+        margin: auto;
+        width: 960px;
+        text-align: center;
+      }
+      #info {
+        font-size: 4em;
+        font-weight: bold;
+        color: #000;
+      }
+      .modal-overlay {
+      display: none;
+      position: fixed;
+      justify-content: center;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .7);
+      }
+
+.modal-overlay.is-show {
+    display: flex;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Instascanサンプルデモ</h1>
+    
+    <!-- ここにカメラの映像を表示する -->
+    <video id="preview"></video>
+    
+    <!-- ここにQRコードの情報を表示する -->
+
+    <a id ="info">
+    </a>
+    
+
+
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script>
+      var videoTag = document.getElementById('preview');
+      var info = document.getElementById('info');
+      var scanner = new Instascan.Scanner({ video: videoTag });
+      
+      //QRコードを認識して情報を取得する
+      scanner.addListener('scan', function (value) {
+        info.innerHTML = value;
+        if (confirm("こちらのURLへ移動しますか？")==true)
+        window.location.href = value;
+
+        //ここでif文つかって場合分けする
+      });
+      
+
+      //PCのカメラ情報を取得する
+      Instascan.Camera.getCameras()
+      .then(function (cameras) {
+          
+          //カメラデバイスを取得できているかどうか？
+          if (cameras.length > 0) {
+            
+            //スキャンの開始
+            scanner.start(cameras[0]);
+          }
+          else {
+            alert('カメラが見つかりません！');
+          }
+      })
+      .catch(function(err) {
+        alert(err);
+      });
+
+    </script>
+  </body>
+</html>

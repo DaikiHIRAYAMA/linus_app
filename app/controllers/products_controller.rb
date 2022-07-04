@@ -6,6 +6,10 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
+  def scan
+   # @product = Product.new
+  end
+
   # GET /products/1 or /products/1.json
   def show
   end
