@@ -22,8 +22,8 @@
   <div class="row">
       <main>
 
-        <h1 class="h2">マイページ</h1>
-        <h2>ユーザー名：</h2>
+        <h1 class="h2">マイページ:<%= current_user.id %></h1>
+        <h2>ユーザー名：<%= current_user.name %></h2>
 
         <h2>メールアドレス：<%= current_user.email %></h2>
 
@@ -43,7 +43,9 @@
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 
-
+    <p>
+    <%= link_to 'Back', orders_path %>
+    </p>
 
 
 

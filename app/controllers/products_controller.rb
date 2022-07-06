@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+    #自分だけ表示させるようにする
   end
 
   def scan

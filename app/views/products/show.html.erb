@@ -1,3 +1,40 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+</head>
+
+<body>
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        
+        <li class="nav-item">
+        <a href="/" class="nav-link active" aria-current="page">LINUS</a>
+        </li>
+        
+        <li class="nav-item">
+        <%= link_to "QRスキャン", scan_products_path ,class: "nav-link" %>
+        </li>
+        
+        <% if current_user.card.blank? %>
+        <li class="nav-item">
+        <%= link_to "クレジットカード登録", new_card_path , class: "nav-link" %>
+        </li>
+        <% end %>
+        
+        <li class="nav-item">
+        <%= link_to "マイページ", mypage_path ,class: "nav-link" %>
+        </li>
+        
+      </ul>
+    </header>
+
+          <main>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -35,3 +72,8 @@
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
+
+      </main>
+
+</body>
+</html>

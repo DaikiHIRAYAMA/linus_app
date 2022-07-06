@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
     end
     
     def company_index
+        @orders = Order.where(user_id: current_user.id)
     end
 
 

@@ -93,8 +93,7 @@
       <div class="card">
           <h5 class="card-header">総顧客数</h5>
           <div class="card-body">
-            <h5 class="card-title">345k</h5>
-            <p class="card-text">Feb 1 - Apr 1, United States</p>
+            <h5 class="card-title"><%= @users.all.count %>人</h5>
             <p class="card-text text-success">18.2% increase since last month</p>
           </div>
         </div>
@@ -103,8 +102,7 @@
       <div class="card">
           <h5 class="card-header">売り上げ</h5>
           <div class="card-body">
-            <h5 class="card-title">$2.4k</h5>
-            <p class="card-text">Feb 1 - Apr 1, United States</p>
+            <h5 class="card-title"><%= @products %>円</h5>
             <p class="card-text text-success">4.6% increase since last month</p>
           </div>
         </div>
@@ -113,8 +111,7 @@
       <div class="card">
           <h5 class="card-header">購買数</h5>
           <div class="card-body">
-            <h5 class="card-title">43</h5>
-            <p class="card-text">Feb 1 - Apr 1, United States</p>
+            <h5 class="card-title"><%= @orders.all.count %>回</h5>
             <p class="card-text text-danger">2.6% decrease since last month</p>
           </div>
         </div>
@@ -133,64 +130,26 @@
                           <th scope="col">注文番号</th>
                           <th scope="col">商品</th>
                           <th scope="col">顧客</th>
-                          <th scope="col">合計金額</th>
+                          <th scope="col">金額</th>
                           <th scope="col">日付</th>
                           <th scope="col"></th>
                         </tr>
                       </thead>
+                         <% @orders.each do |order| %>
                       <tbody>
                         <tr>
-                          <th scope="row">17371705</th>
-                          <td>Volt Premium Bootstrap 5 Dashboard</td>
-                          <td>johndoe@gmail.com</td>
-                          <td>€61.11</td>
-                          <td>Aug 31 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">17370540</th>
-                          <td>Pixel Pro Premium Bootstrap UI Kit</td>
-                          <td>jacob.monroe@company.com</td>
-                          <td>$153.11</td>
-                          <td>Aug 28 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">17371705</th>
-                          <td>Volt Premium Bootstrap 5 Dashboard</td>
-                          <td>johndoe@gmail.com</td>
-                          <td>€61.11</td>
-                          <td>Aug 31 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">17370540</th>
-                          <td>Pixel Pro Premium Bootstrap UI Kit</td>
-                          <td>jacob.monroe@company.com</td>
-                          <td>$153.11</td>
-                          <td>Aug 28 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">17371705</th>
-                          <td>Volt Premium Bootstrap 5 Dashboard</td>
-                          <td>johndoe@gmail.com</td>
-                          <td>€61.11</td>
-                          <td>Aug 31 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">17370540</th>
-                          <td>Pixel Pro Premium Bootstrap UI Kit</td>
-                          <td>jacob.monroe@company.com</td>
-                          <td>$153.11</td>
-                          <td>Aug 28 2020</td>
-                          <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
+                          <th scope="row"><%= order.id %></th>
+                          <td><%= order.product.item_name %></td>
+                          <td><%= order.user.email %></td>
+                          <td><%= order.product.price %></td>
+                          <td><%= order.created_at.strftime("%Y年%-m月%-d日")  %></td>
+                          <td><a href="#" class="btn btn-sm">View</a></td>
                         </tr>
                       </tbody>
+                          <% end %>
                     </table>
               </div>
-                <a href="#" class="btn btn-block btn-light">View all</a>
+                <a href="/" class="btn btn-block btn-light">View all</a>
           </div>
       </div>
   </div>

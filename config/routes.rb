@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   get 'cards/new'
   devise_for :companies
   devise_for :users
-  resources :products
+  resources :products do
+    collection do
+    get :scan
+    end
+  end
   resources :cards, only: [:new, :create]
   resources :users, only: [:show, :index]
   resources :companies, only: [:index, :show]
@@ -17,9 +21,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products do
-     get :scan 
-  end
 
 
   resources :orders, only: [:index, :show]

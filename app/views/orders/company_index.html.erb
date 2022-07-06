@@ -95,29 +95,30 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Date</th>
+      <th scope="col">Total</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+
+
     </tr>
   </thead>
   <tbody>
+      <% @orders.each do |order| %>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td><%= order.id %></td>
+      <td><%= order.product.item_name %></td>
+      <td><%= order.user.email %></td>
+      <td><%= order.user.created_at.strftime("%Y年%-m月%-d日") %></td>
+      <td><%= order.product.price %>円</td>
+      <td><%= order.user.email %></td>
+
+
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    <% end %>
+
   </tbody>
 </table>
 
