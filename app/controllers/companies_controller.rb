@@ -4,7 +4,7 @@ class CompaniesController < ApplicationController
         @users = User.all
         @products = Product.all.sum(:price)
         @orders = Order.all
-        #あとで書き換える
+        
     end
 
     def show

@@ -99,7 +99,6 @@
       <th scope="col">Size</th>
       <th scope="col">stock quantity</th>
       <th scope="col">Description</th>
-      <th scope="col">Image</th>
       <th scope="col">Action</th>
       <th scope="col">Action</th>
       <th scope="col">Action</th>
@@ -113,7 +112,6 @@
         <td><%= product.size %></td>
         <td><%= product.stock_quantity %></td>
         <td><%= product.description %></td>
-        <td><%= product.image %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: '本当に削除してもよろしいでしょうか?' } %></td>

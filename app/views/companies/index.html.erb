@@ -102,7 +102,12 @@
       <div class="card">
           <h5 class="card-header">売り上げ</h5>
           <div class="card-body">
-            <h5 class="card-title"><%= @products %>円</h5>
+          <% @sum = 0 %>
+          <% @orders.each do |order| %>
+          <% @sum += order.product.price %>
+          <% end %>
+
+            <h5 class="card-title"><%= @sum %>円</h5>
             <p class="card-text text-success">4.6% increase since last month</p>
           </div>
         </div>
@@ -132,12 +137,11 @@
                           <th scope="col">顧客</th>
                           <th scope="col">金額</th>
                           <th scope="col">日付</th>
-                          <th scope="col"></th>
                         </tr>
                       </thead>
-                         <% @orders.each do |order| %>
                       <tbody>
                         <tr>
+                          <% @orders.each do |order| %>
                           <th scope="row"><%= order.id %></th>
                           <td><%= order.product.item_name %></td>
                           <td><%= order.user.email %></td>
