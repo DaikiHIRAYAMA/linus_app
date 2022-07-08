@@ -15,7 +15,7 @@
  
 ## テーブル定義書
 
-https://docs.google.com/spreadsheets/d/1kB9Cf9vnebCBvlYYCEP42-2Ln2T1unDUr3Ub7Qvc7ks/edit?usp=sharing
+https://docs.google.com/spreadsheets/d/1kB9Cf9vnebCBvlYYCEP42-2Ln2T1unDUr3Ub7Qvc7ks/edit#gid=2020033787
  
 ## ER図
 ![ER](https://user-images.githubusercontent.com/102858958/177949701-57ddb233-bbfc-4ec7-a79b-4e79dff68133.png)
