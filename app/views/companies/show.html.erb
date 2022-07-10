@@ -92,27 +92,31 @@
         <h1 class="h2">Company info</h1>
         <div class="row my-4">
 
+    <div class="container text-center">
+      <header>
+        <div class="bio">
+          <img src="http://www.croop.cl/UI/twitter/images/up.jpg" alt="background" class="bg">
 
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#">登録情報</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">総売り上げ</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" >総顧客数</a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">登録社名:<%#= current_user.name %></h5>
-    <h5 class="card-title">Email:<%= current_user.email %></h5>
-    <p class="card-text">こんなかんじで登録されてますよ</p>
-  </div>
-</div>
+            <h3>企業名</h3>
+            <p><%= current_user.name %></p>
+            <h3>メールアドレス</h3>
+            <p><%= current_user.email %></p>
+            <h3>住所</h3>
+            <p><%= current_user.id %></p>
+        </div>
+
+      </header>
+
+
+      </div>
+
+    </div>
+  
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 
       </main>

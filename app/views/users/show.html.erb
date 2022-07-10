@@ -1,14 +1,283 @@
-<h1><%= current_user %>さんのページ</h1>
-<h2>カード情報</h2>
-<% if @card.present? %>
-<p>カード番号：**** **** **** <%= @card.last4%></p>
-<p>カード名義人: <%= @card.name %></p>
-<p>有効期限：<%= @card.exp_month %> / <%= @card.exp_year %></p>
-<p>ブランド：<%= @card.brand %></p>
-<% else %>
-  <p>カードが登録されていません</p>
-<% end %>
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-    <p>
-    <%= link_to 'Back', orders_path %>
-    </p>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">LINUS</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">QRスキャン</a></li>
+        <% if current_user.card.blank? %>
+        <li class="nav-item">
+        <%= link_to "クレジットカード登録", new_card_path , class: "nav-link" %>
+        </li>
+        <% end %>
+
+        <li class="nav-item">
+        <%= link_to "マイページ", mypage_path ,class: "nav-link" %>
+        </li>
+      </ul>
+    </header>
+<div class="container-fluid">
+  <div class="row">
+
+      <main>
+
+    <div class="container">
+      <header>
+        <div class="bio">
+          <img src="http://www.croop.cl/UI/twitter/images/up.jpg" alt="background" class="bg">
+
+         <div class="desc">
+          <h2>カード情報</h2>
+          <% if @card.present? %>
+          <p>カード番号：**** **** **** <%= @card.last4%></p>
+          <p>カード名義人: <%= @card.name %></p>
+          <p>有効期限：<%= @card.exp_month %> / <%= @card.exp_year %></p>
+          <p>ブランド：<%= @card.brand %></p>
+          <% else %>
+          <p>カードが登録されていません</p>
+          <% end %>
+          </div>
+        </div>
+
+      </header>
+
+
+      <div class="content">
+       <div class="data text-center">
+            <%= current_user.name %>さんのカード情報
+      </div>
+
+      <%= link_to "#{mypage_path }",class: "nav-link follow" do %>
+      <h5 class="white">mypage</h5>
+      <% end %>
+
+      </div>
+
+    </div>
+  
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+        
+      </main>
+
+      <style>
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  background-color: #ffffff; }
+
+header {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 1em;
+  -moz-border-radius-topleft: 8px;
+  -webkit-border-top-left-radius: 8px;
+  border-top-left-radius: 8px;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-top-right-radius: 8px; }
+
+.container {
+  width: 320px;
+  margin: 3em auto 1em auto;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+  padding-bottom: 1.5em;
+  background-color: #dde1e2;
+  -webkit-box-shadow: #bdc3c7 0 5px 5px;
+  -moz-box-shadow: #bdc3c7 0 5px 5px;
+  box-shadow: #bdc3c7 0 5px 5px; }
+
+.bg {
+  border-bottom: 8px solid #5cc0ff; }
+  
+.bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.bio:hover > .desc {
+  cursor: pointer;
+  opacity: 1; }
+
+.avatarcontainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 70px;
+  height: 70px;
+  display: block; }
+  .avatarcontainer:hover > .hover {
+    opacity: 1; }
+
+.hover {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: #3498db;
+  top: 0;
+  font-size: 1.8em;
+  text-align: center;
+  color: white;
+  padding-top: 18%;
+  opacity: 0;
+  font-family: 'FontAwesome';
+  font-weight: 300;
+  border: 8px solid #5cc0ff;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease; }
+
+.data {
+  margin-top: .6em;
+  color: #000; }
+  .data li {
+    width: 32%;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.5em;
+    font-family: 'Lato';
+    border-right: solid 1px #bdc3c7; }
+    .data li:last-child {
+      border: none; }
+    .data li span {
+      display: block;
+      text-transform: uppercase;
+      font-family: 'Quicksand';
+      font-size: .5em;
+      margin-top: .6em;
+      font-weight:700;
+    }
+
+.desc {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 171px;
+  padding: 1.2em 1em 0 1em;
+  color: white;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in; }
+  .desc h3 {
+    font-family: "Lato";
+    font-size: 1.2em;
+    margin-bottom: .5em; }
+  .desc p {
+    font-size: .9em;
+    font-family: 'Quicksand';
+    line-height: 1.5em; }
+
+.follow {
+  margin: 1.5em auto 0 auto;
+  background-color: #2589cc;
+  width: 150px;
+  color: white;
+  font-family: "Lato";
+  text-align: center;
+  padding: .5em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease; }
+  .follow:hover {
+    background-color: #167abd;
+    cursor: pointer; }
+  .white {
+  color: white;
+  text-align: center;
+  margin: 0em auto 0 auto;
+  }
+
+      </style>
+<script>
+//Follow Button Effect
+
+$(document).ready(
+
+  function iniciar(){
+  $('.follow').on("click", function(){
+    $('.follow').css('background-color','#34CF7A');
+    $('.follow').html('<div class="icon-ok"></div> Following');
+  }); 
+  }
+
+);
+
+</script>
+
+  </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+
+
+
+</body>
+</html>
