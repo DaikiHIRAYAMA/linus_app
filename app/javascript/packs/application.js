@@ -16,3 +16,9 @@ require("../card")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 //= require_tree .
+
+//= require rails-ujs
+//= require activestorage
+//= require turbolinks 
+//= require jquery // turbolinksより下に記述
+//= require_tree .

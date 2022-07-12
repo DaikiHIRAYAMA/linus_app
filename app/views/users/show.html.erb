@@ -37,7 +37,7 @@
           <img src="http://www.croop.cl/UI/twitter/images/up.jpg" alt="background" class="bg">
 
          <div class="desc">
-          <h2>カード情報</h2>
+          <p>カード情報</p>
           <% if @card.present? %>
           <p>カード番号：**** **** **** <%= @card.last4%></p>
           <p>カード名義人: <%= @card.name %></p>
@@ -69,6 +69,9 @@
 
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+     <%= link_to "#{destroy_user_session_path}", method: :delete , class: "text-center" do%>
+     <p>ログアウト</p>
+     <% end %>
 
         
       </main>
@@ -192,8 +195,8 @@ header {
   top: 0;
   background-color: rgba(0, 0, 0, 0.6);
   width: 100%;
-  height: 171px;
-  padding: 1.2em 1em 0 1em;
+  height: 180px;
+  padding: 0;
   color: white;
   text-align: center;
   opacity: 0;
@@ -253,21 +256,6 @@ header {
   }
 
       </style>
-<script>
-//Follow Button Effect
-
-$(document).ready(
-
-  function iniciar(){
-  $('.follow').on("click", function(){
-    $('.follow').css('background-color','#34CF7A');
-    $('.follow').html('<div class="icon-ok"></div> Following');
-  }); 
-  }
-
-);
-
-</script>
 
   </div>
 </div>

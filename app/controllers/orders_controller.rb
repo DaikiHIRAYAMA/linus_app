@@ -12,8 +12,17 @@ class OrdersController < ApplicationController
           currency: 'jpy' 
         )
     
-        current_user.orders.create(product_id: product.id) # 購入履歴テーブルに保存
-        redirect_to root_path
+        if product.stock_quantity >= 1 #在庫が0より多い場合
+        current_user.orders.create(product_id: product.id, status: 0) # 購入履歴テーブルに保存,statusを受注で登録
+
+        product.update(stock_quantity: product.stock_quantity - 1 )#在庫数を減らして更新する 
+        redirect_to root_path #遷移先
+
+        else
+        redirect_to product_path(params[:product_id]), notice: "現在お取り扱いできません" #購入できなかった場合
+
+        end
+
     end
 
     def index
@@ -22,10 +31,19 @@ class OrdersController < ApplicationController
 
     def show
     end
-    
+
     def company_index
-        @orders = Order.where(user_id: current_user.id)
+        @orders = Order.all.order(created_at: "DESC")#.where(user_id: current_user.id)
+    end
+
+    def update
+        @product = Product.find(params[:product_id])  # 1.インスタンス変数にセット
+        @product.update(product_params)   # 2.updateメソッドの実行
     end
 
 
+    private
+    def product_params
+      params.require(:product).permit(:stock_quantity)
+    end
 end

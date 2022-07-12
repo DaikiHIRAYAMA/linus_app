@@ -1,13 +1,44 @@
 Rails.application.routes.draw do
+
+  get 'test_order/create'
+  get 'test_order/index'
   get 'users/show'
   get 'cards/new'
-  devise_for :companies
-  devise_for :users
+
+  devise_for :companies, :controllers => {
+    :confirmations => 'companies/confirmations',
+    :registrations => 'companies/registrations',
+    :sessions => 'companies/sessions',
+    :passwords => 'companies/passwords'
+   }
+
+  
+  devise_for :users, :controllers => {
+    :confirmations => 'users/confirmations',
+    :registrations => 'users/registrations',
+    :sessions => 'users/sessions',
+    :passwords => 'users/passwords'
+   }
+
+  #resources :testers
+
+
   resources :products do
     collection do
     get :scan
     end
+    member do
+      get :product_page
+    end
   end
+
+  resources :testers do
+    member do
+    get :tester_page
+    end
+  end
+
+
   resources :cards, only: [:new, :create]
   resources :users, only: [:show, :index]
   resources :companies, only: [:index, :show]
@@ -20,7 +51,12 @@ Rails.application.routes.draw do
       get :company_index
     end
   end
-
+  
+  resources :test_orders do
+    member do
+      get :company_index
+    end
+  end
 
 
   resources :orders, only: [:index, :show]

@@ -1,16 +1,17 @@
+<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "companies/shared/error_messages", resource: resource %>
 
     <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :email %><br>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">
@@ -22,9 +23,34 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
+
+  <div class="field">
+    <%= f.label :postcode, '郵便番号' %><br>
+    <%= f.text_field :postcode, autofocus: true, autocomplete: "postcode" %>
+  </div>     
+
+  <div class="field">
+     <%= f.label :prefecture_code, '都道府県' %><br>
+     <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name,{ prompt: '選択してください' } %>
+  </div>     
+
+  <div class="field">
+     <%= f.label :address_city, '市区町村' %><br>
+     <%= f.text_field :address_city, autocomplete: "address_city" %>   
+  </div>     
+
+  <div class="field">
+     <%= f.label :address_street, '番地' %><br>
+     <%= f.text_field :address_street, autocomplete: "address_street" %>   
+  </div>     
+
+  <div class="field">
+     <%= f.label :address_building, '建物' %><br />
+     <%= f.text_field :address_building, autocomplete: "address_building" %>   
+  </div> 
 
   <div class="actions">
     <%= f.submit "Sign up" %>

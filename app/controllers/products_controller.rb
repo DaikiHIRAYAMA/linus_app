@@ -62,7 +62,12 @@ class ProductsController < ApplicationController
     end
   end
 
+  def product_page
+    @product = Product.find(params[:id])
+  end
+
   private
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])

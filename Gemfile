@@ -77,3 +77,8 @@ gem 'devise-i18n'
 
 #クレジットカード決済のためのgem
 gem 'payjp'
+
+#住所自動入力のためのgem
+gem 'jp_prefecture'
+gem 'jquery-rails' 
+gem 'sqlite3', '~> 1.3.13'
