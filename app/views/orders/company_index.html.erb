@@ -89,6 +89,7 @@
       </ol>
       </nav>
         <h1 class="h2">Orders</h1>
+        <p id="notice"><%= notice %></p>
         <div class="row my-4">
 
 <table class="table">
@@ -114,8 +115,8 @@
       <td><%= order.user.created_at.strftime("%Y年%-m月%-d日") %></td>
       <td><%= order.product.price %>円</td>
       <td><%= order.user.email %></td>
-      <% if order.status == ""  %>     
-      <td><a class="nav-link" href="/products">発送</a></td>
+      <% if order.status == "received"  %>     
+      <td><%= link_to "発送", shipping_order_path(order.id), method: :patch  %></td>
       <% else %>
       <td><p>発送済み</p></td>
       <% end %>

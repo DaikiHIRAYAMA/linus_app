@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'test_order/index'
   get 'users/show'
   get 'cards/new'
+  
 
   devise_for :companies, :controllers => {
     :confirmations => 'companies/confirmations',
@@ -45,10 +46,12 @@ Rails.application.routes.draw do
 
   #resources :products, only: :index do
   resources :orders, only: [:create, :show]
+  #patch 'shipping/:id' ,:controller =>'orders',:action=>'shipping'
   #end
   resources :orders do
     member do
       get :company_index
+      patch :shipping
     end
   end
   
