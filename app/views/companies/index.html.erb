@@ -25,7 +25,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
-            <%= link_to "Company info", company_path(current_user.id), class: "dropdown-item" %>
+            <%= link_to "Company info", company_path(current_company.id), class: "dropdown-item" %>
             </li>
             <li>
             <%= link_to "Sign out","#{destroy_company_session_path}", method: :delete , class: "dropdown-item" %>
@@ -47,7 +47,7 @@
       </li>
 
       <li class="nav-item">
-          <%= link_to "#{company_index_order_path(current_user.id)}",class: "nav-link" do %>
+          <%= link_to "#{company_index_order_path(current_company.id)}",class: "nav-link" do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
           <span class="ml-2">Orders</span>
           <% end %>
@@ -66,7 +66,7 @@
         </a>
       </li>
       <li class="nav-item">
-          <%= link_to "#{company_index_test_order_path(current_user.id)}",class: "nav-link" do %>
+          <%= link_to "#{company_index_test_order_path(current_company.id)}",class: "nav-link" do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           <span class="ml-2">Tester Orders</span>
           <% end %>
@@ -94,8 +94,8 @@
       <div class="card">
           <h5 class="card-header">総顧客数</h5>
           <div class="card-body">
-            <h5 class="card-title"><%= @users.all.count %>人</h5>
-            <p class="card-text text-success">18.2% increase since last month</p>
+            <h5 class="card-title"><%= @users.count %>人</h5>
+            <p class="card-text text-success">テスターと商品で別カウントする</p>
           </div>
         </div>
   </div>
@@ -107,9 +107,15 @@
           <% @orders.each do |order| %>
           <% @sum += order.product.price %>
           <% end %>
+          <% @sum2 = 0 %>
+          <% @test_orders.each do |t_order| %>
+          <% @sum2 += t_order.product.price %>
+          <% end %>
 
-            <h5 class="card-title"><%= @sum %>円</h5>
-            <p class="card-text text-success">4.6% increase since last month</p>
+            <h5 class="card-title"><%= @sum + @sum2 %>円</h5>
+            <p class="card-text text-success">商品：<%= @sum %>円</p>
+            <p class="card-text text-success">テスター：<%= @sum2 %>円</p>
+
           </div>
         </div>
   </div>
@@ -117,8 +123,9 @@
       <div class="card">
           <h5 class="card-header">購買数</h5>
           <div class="card-body">
-            <h5 class="card-title"><%= @orders.all.count %>回</h5>
-            <p class="card-text text-danger">2.6% decrease since last month</p>
+            <h5 class="card-title"><%= @orders.count + @test_orders.count %>回</h5>
+            <p class="card-text text-success">商品：<%= @orders.count %>人</p>
+            <p class="card-text text-success">テスター：<%= @test_orders.count %>人</p>
           </div>
         </div>
   </div>
@@ -127,7 +134,7 @@
 <div class="row">
   <div class="col-12 col-xl-12 mb-4 mb-lg-0">
       <div class="card">
-          <h5 class="card-header">最近の取引一覧</h5>
+          <h5 class="card-header">商品取引一覧</h5>
           <div class="card-body">
               <div class="table-responsive">
                   <table class="table">
@@ -152,7 +159,52 @@
                           <td><%= order.product.price %></td>
                           <td><%= order.created_at.strftime("%Y年%-m月%-d日")  %></td>
                           <td><%= link_to "詳細", product_path(order.product_id) , class: "nav-link" %></td>
-      <% if order.status == "received"  %>     
+                          <% if order.status == "received"  %>     
+                          <td><a class="nav-link" href="/products">発送</a></td>
+                          <% else %>
+                          <td><p>発送済み</p></td>
+                          <% end %>
+                        </tr>
+                      </tbody>
+                          <% end %>
+                    </table>
+              </div>
+                <%= link_to "View all", company_index_order_path(current_company.id) , class: "nav-link btn btn-block btn-light " %>
+          </div>
+      </div>
+  </div>
+
+
+
+<div class="row">
+  <div class="col-12 col-xl-12 mb-4 mb-lg-0">
+      <div class="card">
+          <h5 class="card-header">テスター取引一覧</h5>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">注文番号</th>
+                          <th scope="col">商品</th>
+                          <th scope="col">顧客</th>
+                          <th scope="col">金額</th>
+                          <th scope="col">日付</th>
+                          <th scope="col">詳細</th>
+                          <th scope="col">Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <% @test_orders.each do |t_order| %>
+                          <th scope="row"><%= t_order.id %></th>
+                          <td><%= t_order.tester.item_name %></td>
+                          <td><%= t_order.user.email %></td>
+                          <td><%= t_order.tester.price %></td>
+                          <td><%= t_order.created_at.strftime("%Y年%-m月%-d日")  %></td>
+                          <td><%= link_to "詳細", tester_path(t_order.tester_id) , class: "nav-link" %></td>
+      <% if t_order.status == "received"  %>     
       <td><a class="nav-link" href="/products">発送</a></td>
       <% else %>
       <td><p>発送済み</p></td>
@@ -163,7 +215,7 @@
                           <% end %>
                     </table>
               </div>
-                <a href="/" class="btn btn-block btn-light">View all</a>
+                <%= link_to "View all", company_index_test_order_path(current_company.id) , class: "nav-link btn btn-block btn-light " %>
           </div>
       </div>
   </div>
