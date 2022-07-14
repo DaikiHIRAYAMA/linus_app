@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   resources :test_orders do
     member do
       get :company_index
+      patch :shipping
     end
   end
 

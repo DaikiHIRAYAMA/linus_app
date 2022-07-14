@@ -32,18 +32,89 @@
         
       </ul>
     </header>
-<div class="container-fluid">
-  <div class="row">
       <main>
+      <h1 class="h2 text-center">おすすめのテスター</h1>
 
-        <h1 class="h2 text-center">購入履歴</h1>
+      <div class="container-fluid">
+      <div class="row flex-row flex-nowrap">
+      <% @recomends.each do |r| %>
+      <% unless @test_orders.exists?(tester_id: r.id) %>
+
+      
+      <div class="col-3">
+
+        <div class="card card-block">
+            <%= image_tag r.image.variant(resize_to_limit: [150, 150]) if r.image.present?  %>
+
+          <div class="card-body">
+
+            <h4 class="card-title"><%= r.item_name %></h4>
+            <p class="card-text"><small class="text-muted">商品説明:<%= r.description %></small></p>
+            <p class="text-center"><%= link_to "詳細", tester_page_tester_path(r.id),class: "btn btn-outline-danger " %></p>
+          </div>
+        </div>
+
+      </div>
+      
+    <% end %>
+    <% end %>
+
+      </div>
+      </div>
+
+
+ 
+
+
+      <h1 class="h2 text-center">テスター購入履歴</h1>
+
         
-    <%  if @orders.present? %>
-    <% @orders.each do |order| %>
-        <% @products = Product.where(id: order.product_id) %>
-         <% @products.each do |product| %>
+      <%  if @test_orders.present? %>
+      <% @test_orders.each do |test_order| %>
+      <% @testers = Tester.where(id: test_order.tester_id) %>
+      <% @testers.each do |tester| %>
 
-    <div class="card mb-3" >
+
+      <div class="card mb-3" >
+      <div class="row g-0">
+      <div class="col-md-4 text-center">
+      <%= image_tag tester.image.variant(resize_to_limit: [150, 150]) if tester.image.present?  %>
+      </div>
+
+      <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">
+        <%= tester.item_name %>
+        </h5>
+        <p class="card-text">価格:<%= tester.price %>円</p>
+        <p class="card-text"><small class="text-muted">商品詳細:<%= tester.description %></small></p>
+      </div>
+      </div>
+
+      </div>
+      </div>
+
+    <% end %>
+    <% end %>
+    <%  else %>
+    <h5 class="text-center">
+        テスターの購入履歴はございません。
+        テスターをぜひご利用下さい。
+    </h5>
+    <%  end %>
+
+
+
+
+
+      <h1 class="h2 text-center">購入履歴</h1>
+        
+      <%  if @orders.present? %>
+      <% @orders.each do |order| %>
+      <% @products = Product.where(id: order.product_id) %>
+      <% @products.each do |product| %>
+
+      <div class="card mb-3" >
       <div class="row g-0">
       <div class="col-md-4 text-center">
       <%= image_tag product.image.variant(resize_to_limit: [150, 150]) if product.image.present?  %>
@@ -58,21 +129,20 @@
         <p class="card-text">在庫:<%= product.stock_quantity %></p>
         <p class="card-text"><small class="text-muted">詳細:<%= product.description %></small></p>
         <p class="card-text"><%= link_to "URL", product_page_product_path(product.id) %></p>
+      </div>
+      </div>
 
-      </div>
-      </div>
       </div>
       </div>
 
     <% end %>
-
     <% end %>
     <%  else %>
-        購入したものはありません
-        ここは今わかりませんので、あとで修正します。
+    <h5 class="text-center">
+        商品の購入履歴はございません。
+        テスターのQRコードを読み取り、ご購入下さい。
+    </h5>
     <%  end %>
-
-
 
 
       </main>

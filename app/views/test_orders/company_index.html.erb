@@ -27,8 +27,9 @@
             <li>
             <%= link_to "Company info", company_path(current_user.id), class: "dropdown-item" %>
             </li>
-            <li><a class="dropdown-item" href="#">CardInfo</a></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li>
+            <%= link_to "Sign out","#{destroy_company_session_path}", method: :delete , class: "dropdown-item" %>
+            </li>
           </ul>
         </div>
   </div>
@@ -68,7 +69,7 @@
       <li class="nav-item">
           <%= link_to "#{company_index_test_order_path(current_user.id)}",class: "nav-link" do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-          <span class="ml-2">Test Orders</span>
+          <span class="ml-2">Tester Orders</span>
           <% end %>
       </li>
       <li class="nav-item">
@@ -84,13 +85,13 @@
 
       <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Test Orders</li>
+      <li class="breadcrumb-item"><a href="/companies">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Tester Orders</li>
       </ol>
       </nav>
-        <h1 class="h2">Test Orders</h1>
+        <h1 class="h2">Tester Orders</h1>
         <div class="row my-4">
-
+<p id="notice"><%= notice %></p>
 <table class="table">
   <thead>
     <tr>
@@ -106,18 +107,18 @@
     </tr>
   </thead>
   <tbody>
-      <% @test_orders.each do |order| %>
+      <% @test_orders.each do |test_order| %>
     <tr>
       <td><%= test_order.id %></td>
-      <td><%= test_order.product.item_name %></td>
+      <td><%= test_order.tester.item_name %></td>
       <td><%= test_order.user.email %></td>
       <td><%= test_order.user.created_at.strftime("%Y年%-m月%-d日") %></td>
-      <td><%= test_order.product.price %>円</td>
+      <td><%= test_order.tester.price %>円</td>
       <td><%= test_order.user.email %></td>
       <% if test_order.status == "received"  %>     
-      <td><a class="nav-link" href="/products">発送</a></td>
+      <td><%= link_to "発送", shipping_test_order_path(test_order.id), method: :patch  %></td>
       <% else %>
-      <td><p>発送済み</p></td>
+      <td>発送済み</td>
       <% end %>
 
 

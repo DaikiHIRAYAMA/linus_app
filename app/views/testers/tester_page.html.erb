@@ -46,7 +46,7 @@
     <h5 class="card-title"><%= @tester.item_name %></h5>
     <p class="card-text">Price:<%= @tester.price %></p>
     <p class="card-text">Description: <%= @tester.description %></p>
-    <%= link_to "購入", orders_path(product_id: @tester.id), class: "btn btn-outline-success", method: :post %>
+    <%= link_to "購入", test_orders_path(tester_id: @tester.id), class: "btn btn-outline-success", method: :post %>
   </div>
 </div>
 

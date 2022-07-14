@@ -6,14 +6,15 @@ class OrdersController < ApplicationController
         product = Product.find(params[:product_id]) # 購入する商品のレコードを取得
         Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # PAY.JPに秘密鍵を設定
         customer_id = current_user.card.customer_id # 顧客idを取得
+       
+        if product.stock_quantity >= 1 #在庫が0より多い場合
+       
         Payjp::Charge.create( # PAY.JPに購入価格と顧客id、通貨の種類を渡す
           amount: product.price,
           customer: customer_id,
           currency: 'jpy' 
-        )
-    
-        if product.stock_quantity >= 1 #在庫が0より多い場合
-        current_user.orders.create(product_id: product.id, status: 0) # 購入履歴テーブルに保存,statusを受注で登録
+        )       
+        current_user.orders.create(product_id: product.id, status: 0, user_id: current_user.id) # 購入履歴テーブルに保存,statusを受注で登録
 
         product.update(stock_quantity: product.stock_quantity - 1 )#在庫数を減らして更新する
         UserMailer.with(to: current_user.email, name: current_user.name, price: product.price, item_name: product.item_name, date: Date.today, address_city: current_user.address_city, address_street: current_user.address_street, address_building: current_user.address_building).buy.deliver_now
@@ -28,6 +29,10 @@ class OrdersController < ApplicationController
 
     def index
         @orders = Order.where(user_id: current_user.id)
+        @test_orders = TestOrder.where(user_id: current_user.id)
+
+        @recomends = Tester.all
+        #テスター全体から既に購入したものを除く
     end
 
     def show

@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :card, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :test_orders, dependent: :destroy
 
   include JpPrefecture
   jp_prefecture :prefecture_code
