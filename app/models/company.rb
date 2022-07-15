@@ -4,6 +4,10 @@ class Company < ApplicationRecord
   devise :database_authenticatable,# :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :products, dependent: :destroy
+  has_many :testers, dependent: :destroy
+
+
   include JpPrefecture
   jp_prefecture :prefecture_code
          

@@ -92,41 +92,46 @@
         <h1 class="h2">Dashboard</h1>
         <div class="row my-4">
   <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0 col-lg-4">
+
+                            <% @sum = 0 %>
+                          <% @sum2 = 0 %>
+                          <% @products.each do |product| %>
+                          <% @orders = Order.where(product_id: product.id) %>
+                          <% @orders.each do |order| %>
+                          <% @sum += order.product.price %>
+                          <% end %>
+                          <% end %>
+
+                          <% @testers.each do |tester| %>
+                          <% @test_orders = TestOrder.where(tester_id: tester.id) %>
+                          <% @test_orders.each do |t_order| %>
+                          <% @sum2 += t_order.tester.price %>
+                          <% end %>
+                          <% end %>
+
+
+                          <% @sum3 = @sum + @sum2 %>
       <div class="card">
-          <h5 class="card-header">総顧客数</h5>
+          <h5 class="card-header">総売り上げ</h5>
           <div class="card-body">
-            <h5 class="card-title"><%= @users.count %>人</h5>
-            <p class="card-text text-success">テスターと商品で別カウントする</p>
+            <h5 class="card-title"><%= @sum3 %>円</h5>
           </div>
         </div>
   </div>
   <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-4">
       <div class="card">
-          <h5 class="card-header">売り上げ</h5>
+          <h5 class="card-header">商品売り上げ</h5>
           <div class="card-body">
-          <% @sum = 0 %>
-          <% @orders.each do |order| %>
-          <% @sum += order.product.price %>
-          <% end %>
-          <% @sum2 = 0 %>
-          <% @test_orders.each do |t_order| %>
-          <% @sum2 += t_order.product.price %>
-          <% end %>
-
-            <h5 class="card-title"><%= @sum + @sum2 %>円</h5>
-            <p class="card-text text-success">商品：<%= @sum %>円</p>
-            <p class="card-text text-success">テスター：<%= @sum2 %>円</p>
-
+            <h5 class="card-title"><%= @sum %>円</h5>
           </div>
         </div>
   </div>
   <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-4">
       <div class="card">
-          <h5 class="card-header">購買数</h5>
+          <h5 class="card-header">テスター売り上げ</h5>
           <div class="card-body">
-            <h5 class="card-title"><%= @orders.count + @test_orders.count %>回</h5>
-            <p class="card-text text-success">商品：<%= @orders.count %>人</p>
-            <p class="card-text text-success">テスター：<%= @test_orders.count %>人</p>
+
+            <h5 class="card-title"><%= @sum2 %>円</h5>
           </div>
         </div>
   </div>
@@ -153,6 +158,8 @@
                       </thead>
                       <tbody>
                         <tr>
+                          <% @products.each do |product| %>
+                          <% @orders = Order.where(product_id: product.id) %>
                           <% @orders.each do |order| %>
                           <th scope="row"><%= order.id %></th>
                           <td><%= order.product.item_name %></td>
@@ -168,6 +175,8 @@
                         </tr>
                       </tbody>
                           <% end %>
+                          <% end %>
+
                     </table>
               </div>
                 <%= link_to "View all", company_index_order_path(current_company.id) , class: "nav-link btn btn-block btn-light " %>
@@ -198,14 +207,16 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <% @test_orders.each do |t_order| %>
-                          <th scope="row"><%= t_order.id %></th>
-                          <td><%= t_order.tester.item_name %></td>
-                          <td><%= t_order.user.email %></td>
-                          <td><%= t_order.tester.price %></td>
-                          <td><%= t_order.created_at.strftime("%Y年%-m月%-d日")  %></td>
-                          <td><%= link_to "詳細", tester_path(t_order.tester_id) , class: "nav-link" %></td>
-      <% if t_order.status == "received"  %>     
+                          <% @testers.each do |tester| %>
+                          <% @test_orders = TestOrder.where(tester_id: tester.id) %>
+                          <% @test_orders.each do |test_order| %>
+                          <th scope="row"><%= test_order.id %></th>
+                          <td><%= test_order.tester.item_name %></td>
+                          <td><%= test_order.user.email %></td>
+                          <td><%= test_order.tester.price %></td>
+                          <td><%= test_order.created_at.strftime("%Y年%-m月%-d日")  %></td>
+                          <td><%= link_to "詳細", tester_path(test_order.tester_id) , class: "nav-link" %></td>
+      <% if test_order.status == "received"  %>     
       <td><a class="nav-link" href="/products">発送</a></td>
       <% else %>
       <td><p>発送済み</p></td>
@@ -214,6 +225,8 @@
                         </tr>
                       </tbody>
                           <% end %>
+                          <% end %>
+
                     </table>
               </div>
                 <%= link_to "View all", company_index_test_order_path(current_company.id) , class: "nav-link btn btn-block btn-light " %>
