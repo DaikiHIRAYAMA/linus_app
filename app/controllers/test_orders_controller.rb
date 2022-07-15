@@ -1,5 +1,7 @@
 class TestOrdersController < ApplicationController
-  
+  before_action :authenticate_user!, only: [:create, :index]
+  before_action :authenticate_company!, only: [:company_index, :shipping]
+
   def create
     return redirect_to new_card_path unless current_user.card.present?
     tester = Tester.find(params[:tester_id]) # 購入するtesterのレコードを取得
@@ -23,7 +25,7 @@ class TestOrdersController < ApplicationController
       current_user.test_orders.create(tester_id: tester.id, status: 0, user_id: current_user.id) # テスター購入履歴テーブルに保存,statusを受注で登録
       tester.update(stock_quantity: tester.stock_quantity - 1 )#在庫数を減らして更新する 
       UserMailer.with(to: current_user.email, name: current_user.name, price: tester.price, item_name: tester.item_name, date: Date.today, address_city: current_user.address_city, address_street: current_user.address_street, address_building: current_user.address_building).buy.deliver_now
-      redirect_to root_path #遷移先
+      redirect_to root_path, notice: "テスターを購入しました" #遷移先
 
     else
       redirect_to tester_path(params[:tester_id]), notice: "現在お取り扱いできません" #購入できなかった場合
@@ -32,12 +34,10 @@ class TestOrdersController < ApplicationController
     end
   end
 
-  def index
-    @test_orders = TestOrder.where(user_id: current_user.id)
-  end
 
-  def company_index
-    @test_orders = TestOrder.all.order(created_at: "DESC")#.where(user_id: current_user.id)
+  def company_index #OK
+    @testers = Tester.where(company_id: current_company.id)
+
   end
 
   def update
@@ -51,7 +51,7 @@ class TestOrdersController < ApplicationController
     user = User.find(test_order.user_id)
     UserMailer.with(to: user.email, name: user.name, price: tester.price, item_name: tester.item_name, date: Date.today, address_city: user.address_city, address_street: user.address_street, address_building: user.address_building).shipping.deliver_now
     test_order.update(status: "ordered" )
-    redirect_to company_index_test_order_path(current_user.id),notice: "お客様に発送メールを送信しました。"
+    redirect_to company_index_test_order_path(current_company.id),notice: "お客様に発送メールを送信しました。"
 end
 
 

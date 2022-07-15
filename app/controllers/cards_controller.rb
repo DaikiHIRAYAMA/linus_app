@@ -1,5 +1,6 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  
   def new
     redirect_to root_path if user_signed_in? && current_user.card
   end
@@ -17,10 +18,11 @@ class CardsController < ApplicationController
       user_id: current_user.id
     )
 
-    if card.save
-      redirect_to root_path
+    if card.save!
+      redirect_to root_path, notice: "カード情報が登録されました"
+
     else
-      redirect_to new_card_path
+      render new_card_path
     end 
   end
 

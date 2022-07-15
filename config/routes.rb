@@ -62,9 +62,6 @@ Rails.application.routes.draw do
     end
   end
 
-
-  resources :orders, only: [:index, :show]
-
   devise_scope :user do
     get 'mypage', to: 'devise/registrations#show', as: :mypage
   end
@@ -74,6 +71,9 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  root 'orders#index'
+    root 'orders#index'
+
+  
+
 
 end

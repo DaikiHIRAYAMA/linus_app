@@ -1,6 +1,8 @@
 class TestersController < ApplicationController
-  before_action :set_tester, only: %i[ show edit update destroy ]
-  #before_action :authenticate_user!, except: [:index] 
+  before_action :set_tester, only: %i[ show edit update destroy tester_page ]
+  before_action :authenticate_user!, only: [:tester_page] 
+  before_action :authenticate_company!, only: [:index, :edit, :new, :show ] 
+
   
   def create
     @tester = Tester.new(tester_params)
@@ -16,9 +18,8 @@ class TestersController < ApplicationController
     end
   end
 
-  def index
-    @testers = Tester.all
-    #自分だけ表示させるようにする
+  def index #OK
+    @testers = Tester.where(company_id: current_company.id)
   end
 
   def show
@@ -53,7 +54,6 @@ class TestersController < ApplicationController
   end
 
   def tester_page
-    @tester = Tester.find(params[:id])
   end
 
 

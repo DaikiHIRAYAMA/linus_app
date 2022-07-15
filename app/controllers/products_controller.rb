@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
-  #before_action :authenticate_user!, except: [:index]
+  before_action :set_product, only: %i[ show edit update destroy product_page ]
+  before_action :authenticate_user!, only: [:product_page, :scan]
+  before_action :authenticate_company!, only: [:index, :edit, :new, :show ]
   # GET /products or /products.json
-  def index
-    @products = Product.all
-    #自分だけ表示させるようにする
+  def index #OK
+    @products = Product.where(company_id: current_company.id)
   end
 
   def scan
@@ -63,7 +63,6 @@ class ProductsController < ApplicationController
   end
 
   def product_page
-    @product = Product.find(params[:id])
   end
 
   private

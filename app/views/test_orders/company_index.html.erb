@@ -107,6 +107,8 @@
     </tr>
   </thead>
   <tbody>
+      <% @testers.each do |tester| %>
+       <% @test_orders = TestOrder.where(tester_id: tester.id) %>
       <% @test_orders.each do |test_order| %>
     <tr>
       <td><%= test_order.id %></td>
@@ -123,6 +125,8 @@
 
 
     </tr>
+    <% end %>
+
     <% end %>
 
   </tbody>

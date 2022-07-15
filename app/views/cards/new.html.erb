@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard</title>
+    <title>Card info</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 </head>
@@ -40,7 +40,7 @@
 <%= form_with url: cards_path, id: "card_form", local: true do |f| %>
   <div class="text-center">
     <%= f.label :number, "カード番号" %>
-    <%= f.text_field :number %>
+    <%= f.text_field :number , placeholder: "テストカード番号を入力してください"  %>
   </div>
   <div class="text-center">
     <%= f.label :name, "カード名義人" %>
@@ -48,15 +48,15 @@
   </div>
   <div class="text-center">
     <%= f.label :cvc, "セキュリティコード" %>
-    <%= f.text_field :cvc %>
+    <%= f.text_field :cvc , placeholder: "半角3桁で入力してください" %>
   </div>
   <div class="text-center">
     <%= f.label :exp_month, "有効期限（月）" %>
-    <%= f.text_field :exp_month %>
+    <%= f.text_field :exp_month, placeholder: "半角2桁で入力してください" %>
   </div>
   <div class="text-center">
     <%= f.label :exp_year, "有効期限（年）" %>
-    <%= f.text_field :exp_year %>
+    <%= f.text_field :exp_year, placeholder: "半角2桁で入力してください"%>
   </div>
   <br>
   <div class="text-center">

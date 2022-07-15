@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
-    before_action :authenticate_user!, only: [:create, :index, :show]
+    before_action :authenticate_user!, only: [:create, :index]
+    before_action :authenticate_company!, only: [:company_index, :shipping]
 
-    def create
+
+    def create #OK
         return redirect_to new_card_path unless current_user.card.present?
         product = Product.find(params[:product_id]) # 購入する商品のレコードを取得
         Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # PAY.JPに秘密鍵を設定
@@ -18,7 +20,7 @@ class OrdersController < ApplicationController
 
         product.update(stock_quantity: product.stock_quantity - 1 )#在庫数を減らして更新する
         UserMailer.with(to: current_user.email, name: current_user.name, price: product.price, item_name: product.item_name, date: Date.today, address_city: current_user.address_city, address_street: current_user.address_street, address_building: current_user.address_building).buy.deliver_now
-        redirect_to root_path #遷移先
+        redirect_to root_path , notice: "商品を購入しました" #遷移先
 
         else
         redirect_to product_path(params[:product_id]), notice: "現在お取り扱いできません" #購入できなかった場合
@@ -27,19 +29,20 @@ class OrdersController < ApplicationController
 
     end
 
-    def index
+    def index #OK
         @orders = Order.where(user_id: current_user.id)
+        #自身が購入したものを表示（商品）
+
         @test_orders = TestOrder.where(user_id: current_user.id)
+        #自身が購入されたものを表示（テスター）
 
         @recomends = Tester.all
-        #テスター全体から既に購入したものを除く
+        #テスター全体から既に購入したものを除く→viewで処理を行った
     end
 
-    def show
-    end
+    def company_index #OK
+        @products = Product.where(company_id: current_company.id)
 
-    def company_index
-        @orders = Order.all.order(created_at: "DESC")#.where(user_id: current_user.id)
     end
 
     def update
@@ -53,7 +56,7 @@ class OrdersController < ApplicationController
         user = User.find(order.user_id)
         UserMailer.with(to: user.email, name: user.name, price: product.price, item_name: product.item_name, date: Date.today, address_city: user.address_city, address_street: user.address_street, address_building: user.address_building).shipping.deliver_now
         order.update(status: "ordered" )
-        redirect_to company_index_order_path(current_user.id),notice: "お客様に発送メールを送信しました。"
+        redirect_to company_index_order_path(current_company.id),notice: "お客様に発送メールを送信しました。"
     end
 
     private

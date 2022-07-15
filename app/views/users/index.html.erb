@@ -92,6 +92,7 @@
         <div class="row my-4">
 
 <table class="table">
+  <h5>商品購入者</h5>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -100,16 +101,69 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user| %>
+
+
+    <% @products.each do |product| %>
+    <% @users1 = User.order.where(product_id: product.id) %>
+    <% end %>
+    <% if @users1.present? %>
+    <% @users1.each do |user| %>
     <tr>
       <td><%= user.id %></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
     </tr>
     <% end %>
+    <% else %>
+    <p>現在商品利用者はいません</p>
+    <% end %>
 
   </tbody>
 </table>
+
+<table class="table">
+  <h5>テスター購入者</h5>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @testers.each do |tester| %>
+    <% @users2 = User.test_order.where(tester_id: tester.id) %>
+    <% end %>
+    <% if @users2.present? %>
+    <% @users2.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+    </tr>
+    <% end %>
+    <% else %>
+    <p>現在テスター利用者はいません</p>
+
+    <% end %>
+
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
       </main>
 

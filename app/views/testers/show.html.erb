@@ -101,13 +101,12 @@
     </div>
     <div class="card-body">
     <h5 class="card-title"><%= @tester.item_name %></h5>
-    <p class="card-text">Price:<%= @tester.price %></p>
-    <p class="card-text">Description: <%= @tester.description %></p>
-    <%#= link_to "購入", orders_path(product_id: @tester.id), class: "btn btn-outline-success", method: :post %>
+    <p class="card-text">価格:<%= @tester.price %>円</p>
+    <p class="card-text">商品説明: <%= @tester.description %></p>
   </div>
 </div>
 
-  <strong>Stock quantity:</strong>
+  <strong>残り在庫数:</strong>
   <%= @tester.stock_quantity %>
 
  <p class="text-center">

@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
-</head>
+
 <body>
 <main>
 
 <h2>Sign up</h2>
+
+  <p class="alert"><%= alert %></p>
+
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
@@ -40,22 +36,22 @@
   </div>
 
 <div class="field">
-     <%= f.label :postcode %><br />
+     <%= f.label :郵便番号 %><br />
      <%= f.text_field :postcode, autofocus: true, autocomplete: "postcode" %>   </div>     
 <div class="field">
-     <%= f.label :prefecture_code %><br />
+     <%= f.label :都道府県 %><br />
      <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name %>
 </div>     
 <div class="field">
-     <%= f.label :address_city %><br />
+     <%= f.label :市区町村 %><br />
      <%= f.text_field :address_city, autocomplete: "address_city" %>   
 </div>     
 <div class="field">
-     <%= f.label :address_street %><br />
+     <%= f.label :番地 %><br />
      <%= f.text_field :address_street, autocomplete: "address_street" %>   
 </div>     
 <div class="field">
-     <%= f.label :address_building %><br />
+     <%= f.label :建物名 %><br />
      <%= f.text_field :address_building, autocomplete: "address_building" %>   
 </div> 
 
