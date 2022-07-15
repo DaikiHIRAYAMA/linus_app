@@ -55,8 +55,13 @@
 
       <div class="content">
        <div class="data text-center">
-            購入回数：
+            <p>商品購入回数：
             <span><%= current_user.orders.count %>回</span>
+            </p>
+            <p>
+            テスター購入回数：
+            <span><%= current_user.test_orders.count %>回</span>
+            </p>
       </div>
 
       <%= link_to "#{user_path(current_user.id)}",class: "nav-link follow" do %>
