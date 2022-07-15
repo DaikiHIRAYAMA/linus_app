@@ -81,3 +81,7 @@ gem 'payjp'
 #住所自動入力のためのgem
 gem 'jp_prefecture'
 gem 'jquery-rails' 
+
+#ENV
+gem 'dotenv'
+gem 'dotenv-rails'

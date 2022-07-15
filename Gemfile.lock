@@ -315,6 +315,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   devise
   devise-i18n
+  dotenv
   dotenv-rails
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
