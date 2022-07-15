@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:show]
   before_action :authenticate_company!, only: [:index]
+  before_action :correct_user, only: [:show]
 
 
   def show
@@ -17,4 +18,16 @@ class UsersController < ApplicationController
     @testers = Tester.where(company_id: current_company.id)
 
   end
+
+  private
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to current_user unless current_user?(@user)
+  end
+
+  def current_user?(user)
+    user == current_user
+  end
+
 end

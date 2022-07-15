@@ -11,7 +11,7 @@
 <body>
  <nav class="navbar navbar-light bg-light p-3">
   <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/companies">
           LINUS
       </a>
       <button class="navbar-toggler d-md-none collapsed mb-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,25 +98,34 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <th scope="col">商品名</th>
+
     </tr>
   </thead>
   <tbody>
 
 
     <% @products.each do |product| %>
-    <% @users1 = User.order.where(product_id: product.id) %>
-    <% end %>
+    <% @orders = Order.where(product_id: product.id) %>
+    <% @orders.each do |order| %>
+    <% @users1 = User.where(id: order.user_id) %>
     <% if @users1.present? %>
     <% @users1.each do |user| %>
     <tr>
       <td><%= user.id %></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
+      <td><%= product.item_name %></td>
+
     </tr>
     <% end %>
     <% else %>
-    <p>現在商品利用者はいません</p>
+    <p>現在商品購入者はいません</p>
     <% end %>
+
+    <% end %>
+    <% end %>
+
 
   </tbody>
 </table>
@@ -128,42 +137,40 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <th scope="col">商品名</th>
+
     </tr>
   </thead>
   <tbody>
 
     <% @testers.each do |tester| %>
-    <% @users2 = User.test_order.where(tester_id: tester.id) %>
-    <% end %>
+    <% @test_orders = TestOrder.where(tester_id: tester.id) %>
+    <% @test_orders.each do |test_order| %>
+    <% @users2 = User.where(id: test_order.user_id) %>
     <% if @users2.present? %>
     <% @users2.each do |user| %>
     <tr>
       <td><%= user.id %></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
+      <td><%= tester.item_name %></td>
+
     </tr>
     <% end %>
     <% else %>
-    <p>現在テスター利用者はいません</p>
+    <p>現在テスター購入者はいません</p>
+    <% end %>
 
     <% end %>
+    <% end %>
+
+
+
 
   </tbody>
 </table>
 
 
-
-
-
-
-
-
-
-
-
-
-
-    
 
       </main>
 

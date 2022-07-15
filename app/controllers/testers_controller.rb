@@ -9,7 +9,7 @@ class TestersController < ApplicationController
 
     respond_to do |format|
       if @tester.save
-        format.html { redirect_to testers_path, notice: "Tester was successfully created." }
+        format.html { redirect_to testers_path, notice: "テスターを登録しました" }
         format.json { render :show, status: :created, location: @tester }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -33,18 +33,23 @@ class TestersController < ApplicationController
   end
 
   def destroy
+    unless TestOrder.where(tester_id: @tester.id).exists?
+
     @tester.destroy
 
     respond_to do |format|
-      format.html { redirect_to testers_url, notice: "Tester was successfully destroyed." }
+      format.html { redirect_to testers_url, notice: "テスターを削除しました" }
       format.json { head :no_content }
     end
+  else
+    redirect_to testers_url, notice: "テスターは既に購入されているため、削除できません。"
+  end
   end
 
   def update
     respond_to do |format|
       if @tester.update(tester_params)
-        format.html { redirect_to testers_path, notice: "Tester was successfully updated." }
+        format.html { redirect_to testers_path, notice: "テスターを修正しました" }
         format.json { render :show, status: :ok, location: @tester}
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,7 +70,7 @@ class TestersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tester_params
-    params.require(:tester).permit(:id,:item_name, :price, :stock_quantity, :description, :image)
+    params.require(:tester).permit(:id,:item_name, :price, :stock_quantity, :description, :image, :company_id)
   end
 
 end

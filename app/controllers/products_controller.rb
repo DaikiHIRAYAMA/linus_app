@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        format.html { redirect_to product_url(@product), notice: "商品を登録しました" }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
+        format.html { redirect_to product_url(@product), notice: "商品を修正しました" }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,12 +54,17 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
+    unless Order.where(product_id: @product.id).exists?
     @product.destroy
 
     respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_url, notice: "商品を削除しました" }
       format.json { head :no_content }
     end
+  else
+    redirect_to products_url, notice: "商品は既に購入されているため、削除できません。"
+  end
+
   end
 
   def product_page
@@ -74,6 +79,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:id,:item_name, :price, :stock_quantity, :description, :image)
+      params.require(:product).permit(:id,:item_name, :price, :stock_quantity, :description, :image, :company_id)
     end
+
 end

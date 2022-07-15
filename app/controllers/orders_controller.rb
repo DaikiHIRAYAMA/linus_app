@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
     before_action :authenticate_user!, only: [:create, :index]
     before_action :authenticate_company!, only: [:company_index, :shipping]
-
+    before_action :correct_company, only: [:company_index]  
 
     def create #OK
         return redirect_to new_card_path unless current_user.card.present?
@@ -63,5 +63,14 @@ class OrdersController < ApplicationController
     def product_params
       params.require(:product).permit(:stock_quantity)
     end
+
+    def correct_company
+        @company = Company.find(params[:id])
+        redirect_to current_company unless current_company?(@company)
+      end
+    
+      def current_company?(company)
+        company == current_company
+      end
 
 end
