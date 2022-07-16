@@ -25,6 +25,7 @@ class TestOrdersController < ApplicationController
 
       current_user.test_orders.create(tester_id: tester.id, status: 0, user_id: current_user.id) # テスター購入履歴テーブルに保存,statusを受注で登録
       tester.update(stock_quantity: tester.stock_quantity - 1 )#在庫数を減らして更新する 
+      
       UserMailer.with(to: current_user.email, name: current_user.name, price: tester.price, item_name: tester.item_name, date: Date.today, address_city: current_user.address_city, address_street: current_user.address_street, address_building: current_user.address_building).buy.deliver_now
       redirect_to root_path, notice: "テスターを購入しました" #遷移先
 
