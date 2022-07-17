@@ -2,7 +2,7 @@ class TestersController < ApplicationController
   before_action :set_tester, only: %i[ show edit update destroy tester_page ]
   before_action :authenticate_user!, only: [:tester_page] 
   before_action :authenticate_company!, only: [:index, :edit, :new, :show ] 
-  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
+
   
   def create
     @tester = Tester.new(tester_params)
@@ -73,7 +73,4 @@ class TestersController < ApplicationController
     params.require(:tester).permit(:id,:item_name, :price, :stock_quantity, :description, :image, :company_id)
   end
 
-  def set_s3_direct_post
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
-  end
 end

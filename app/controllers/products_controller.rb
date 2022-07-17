@@ -2,7 +2,6 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy product_page ]
   before_action :authenticate_user!, only: [:product_page, :scan]
   before_action :authenticate_company!, only: [:index, :edit, :new, :show ]
-  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   # GET /products or /products.json
   def index #OK
     @products = Product.where(company_id: current_company.id)
@@ -82,7 +81,5 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:id,:item_name, :price, :stock_quantity, :description, :image, :company_id)
     end
-    def set_s3_direct_post
-      @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
-    end
+
 end
