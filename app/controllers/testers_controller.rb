@@ -2,6 +2,7 @@ class TestersController < ApplicationController
   before_action :set_tester, only: %i[ show edit update destroy tester_page ]
   before_action :authenticate_user!, only: [:tester_page] 
   before_action :authenticate_company!, only: [:index, :edit, :new, :show ] 
+  before_action :correct_company_tester, only: [:company_index]  
 
   
   def create
@@ -71,6 +72,15 @@ class TestersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def tester_params
     params.require(:tester).permit(:id,:item_name, :price, :stock_quantity, :description, :image, :company_id)
+  end
+
+  def correct_company_tester
+    @tester = Tester.find(params[:id])
+    redirect_to current_company unless current_company_tester?(@tester)
+  end
+
+  def current_company_product?(tester)
+    tester.company_id == current_company.id
   end
 
 end
