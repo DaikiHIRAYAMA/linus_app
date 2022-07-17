@@ -23,5 +23,7 @@ class User < ApplicationRecord
   validates :prefecture_code, presence: true
   validates :address_city, presence: true
   validates :address_street, presence: true
+  validates :name, presence: true, length: { maximum: 30 }
+  validates :email, presence: true, length: { maximum: 255 }, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
 
 end
