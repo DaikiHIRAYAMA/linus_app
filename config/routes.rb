@@ -74,6 +74,6 @@ Rails.application.routes.draw do
     root 'orders#index'
 
   
-
+    get '*path', controller: 'application', action: 'render_404'
 
 end
