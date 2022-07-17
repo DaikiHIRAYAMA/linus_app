@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
-    has_one_attached :image
+    #has_one_attached :image
+    mount_uploader :image, ImageUploader
     has_one :order, dependent: :destroy
     belongs_to :company
 

@@ -1,5 +1,6 @@
 class Tester < ApplicationRecord
-    has_one_attached :image
+    #has_one_attached :image
+    mount_uploader :image, ImageUploader
     has_one :test_order, dependent: :destroy
     belongs_to :company
 

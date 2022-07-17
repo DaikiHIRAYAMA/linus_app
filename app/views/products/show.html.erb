@@ -95,7 +95,7 @@
 
 <div class="card text-center">
   <div class="card-img-top">
-  <%= image_tag @product.image.variant(resize_to_limit: [150, 150]) if @product.image.present?  %>
+  <%= image_tag @product.image.to_s if @product.image.present?  %>
   </div>
   <div class="card-body">
     <h5 class="card-title"><%= @product.item_name %></h5>
