@@ -50,6 +50,7 @@
           <div class="card-body">
 
             <h4 class="card-title"><%= r.item_name %></h4>
+            <p class="card-text">価格:<%= r.price %>円</p>
             <p class="card-text"><small class="text-muted">商品説明:<%= r.description %></small></p>
             <p class="text-center"><%= link_to "詳細", tester_page_tester_path(r.id),class: "btn btn-outline-danger " %></p>
           </div>
@@ -126,10 +127,9 @@
         <h5 class="card-title">
         <%= product.item_name %>
         </h5>
-        <p class="card-text">SIZE:<%= product.size %></p>
         <p class="card-text">在庫:<%= product.stock_quantity %></p>
         <p class="card-text"><small class="text-muted">詳細:<%= product.description %></small></p>
-        <p class="card-text"><%= link_to "URL", product_page_product_path(product.id) %></p>
+        <p class="card-text"><%= link_to "商品詳細", product_page_product_path(product.id) %></p>
       </div>
       </div>
 

@@ -168,7 +168,7 @@
                           <td><%= order.created_at.strftime("%Y年%-m月%-d日")  %></td>
                           <td><%= link_to "詳細", product_path(order.product_id) , class: "nav-link" %></td>
                           <% if order.status == "received"  %>     
-                          <td><a class="nav-link" href="/products">発送</a></td>
+                          <td><%= link_to "発送", shipping_order_path(order.id), method: :patch  %></td>
                           <% else %>
                           <td><p>発送済み</p></td>
                           <% end %>
@@ -217,7 +217,7 @@
                           <td><%= test_order.created_at.strftime("%Y年%-m月%-d日")  %></td>
                           <td><%= link_to "詳細", tester_path(test_order.tester_id) , class: "nav-link" %></td>
       <% if test_order.status == "received"  %>     
-      <td><a class="nav-link" href="/products">発送</a></td>
+      <td><%= link_to "発送", shipping_test_order_path(test_order.id), method: :patch  %></td>
       <% else %>
       <td><p>発送済み</p></td>
       <% end %>
