@@ -84,4 +84,3 @@ gem 'jquery-rails'
 
 #ENV
 gem 'dotenv'
-gem 'dotenv-rails'
