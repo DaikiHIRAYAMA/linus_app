@@ -79,7 +79,7 @@ class TestersController < ApplicationController
     redirect_to current_company unless current_company_tester?(@tester)
   end
 
-  def current_company_product?(tester)
+  def current_company_tester?(tester)
     tester.company_id == current_company.id
   end
 
