@@ -17,4 +17,5 @@ unless Rails.env.development? || Rails.env.test?
       config.fog_directory  = 'linus-backet'
       config.cache_storage = :fog
     end
-  end
+
+end
