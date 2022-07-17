@@ -2,7 +2,7 @@ class TestersController < ApplicationController
   before_action :set_tester, only: %i[ show edit update destroy tester_page ]
   before_action :authenticate_user!, only: [:tester_page] 
   before_action :authenticate_company!, only: [:index, :edit, :new, :show ] 
-  before_action :correct_company_tester, only: [:company_index]  
+  before_action :correct_company_tester, only: [:show]  
 
   
   def create

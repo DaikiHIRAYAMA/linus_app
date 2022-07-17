@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy product_page ]
   before_action :authenticate_user!, only: [:product_page, :scan]
   before_action :authenticate_company!, only: [:index, :edit, :new, :show ]
-  before_action :correct_company_product, only: [:company_index]  
+  before_action :correct_company_product, only: [:show]  
   # GET /products or /products.json
   def index #OK
     @products = Product.where(company_id: current_company.id)
